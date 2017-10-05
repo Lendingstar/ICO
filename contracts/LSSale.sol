@@ -12,8 +12,22 @@ contract Token
 
 
 /**
-* @title LS Crowdsale event
-* @author LS Inc
+* @title Lending Star Crowdsale
+* @author LendingStar Malaysia Sdn Bhd.
+*
+* A crowdsale smart contract that allows investors to buy Lending Star
+* tokens during limited period of time. A period of time while crowdsale's
+* running as well as LST price are fixed and defined during contract creation.
+*
+* The contract has a cap - total amount of funds that could be raised by
+* crowdsale.
+*
+* The contract holds all investments till crowdsale owner withdraws them by
+* withdraw() method. The funds will be transferred to the 'wallet' address,
+* specified during contract creation.
+*
+* Investor should use buyTokens() method in order to buy some LSTs. The method
+* will forward appropriate amount of LSTs to sender's address.
 */
 contract LSSale is Ownable
 {
@@ -22,34 +36,33 @@ contract LSSale is Ownable
     // The token being sold
     Token public token;
 
-    // start and end timestamps where investments are allowed (both inclusive)
+    // start and end timestamps when investments are allowed (both inclusive)
     uint256 public startTime;
     uint256 public endTime;
 
     // address where funds are collected
     address public wallet;
 
-    // 1 token == weiPrice wei
-    // rate = 1/weiPrice token to wei
+    // How many Wei does investor need to buy 0.000000000000000001 LST
     uint256 public rate;
 
-    // how much Ethers in wei we want to raise
+    // how much funds in Wei do we want to raise during crowdsale
     uint256 public weiGoal;
 
-    // amount of raised money in wei
+    // amount of funds (in Wei) been raised
     uint256 public weiRaised = 0;
 
     /**
     * event for token purchase logging
     * @param investor who paid for the tokens
-    * @param value amount of funds (in wei) invested
+    * @param value amount of funds (in Wei) invested
     * @param tokens amount of tokens purchased
     */
     event TokenPurchase(address indexed investor, uint256 value, uint256 tokens);
 
     /**
     * event for funds withdrawal logging
-    * @param value amount of funds (in wei) been transferred
+    * @param value amount of funds (in Wei) been transferred
     */
     event FundsWithdrawal(uint256 value);
 
@@ -66,6 +79,16 @@ contract LSSale is Ownable
         _;
     }
 
+    /**
+    * @dev Lending Star crowdsale constructor
+    * @param _rate uint256 value specifies how many Wei do you need to buy
+    * 0.000000000000000001 LST
+    * @param _goal uint256 value specifies what is the goal in Wei of crowdsale
+    * @param _startTime time when crowdsale begins
+    * @param _endTime time when crowdsale ends
+    * @param _tokenAddress address of LST contract
+    * @param _wallet address that will be used for funds withdrawal
+    */
     function LSSale(
         uint256 _rate,
         uint256 _goal,
@@ -92,11 +115,11 @@ contract LSSale is Ownable
     }
 
     /**
-    * @notice The function forwards appropriate amount of LST tokens back
-    * to investor. Current ETH/LST ratio preserved in 'rate' variable of
-    * this contract. Make sure that the contract is in Actice state (you're
-    * makeing transaction in correct time period AND contract has not run out
-    * of funds yet).
+    * @notice The function forwards appropriate amount of LSTs to investor.
+    * Current ETH/LST ratio preserved in 'rate' variable of the contract.
+    * Make sure that the contract is in Actice state (you're
+    * makeing transaction in valid time period AND crowdsale has not reach
+    * the cap yet).
     */
     function buyTokens() public
         validPurchase
@@ -117,31 +140,7 @@ contract LSSale is Ownable
     }
 
     /**
-    * @dev The function allows owner to buy tokens in favour of _beneficiry
-    * @param _beneficiary address that will recieve tokens
-    */
-    function buyTokensFor(address _beneficiary) external
-        validPurchase
-        onlyOwner
-        payable 
-    {
-        require(_beneficiary != address(0));
-
-        uint256 _investments = msg.value;
-
-        // Updating raised funds status
-        weiRaised = weiRaised.add(_investments);
-
-        // Calculating an amount of tokens to be sold
-        uint256 _tokens = _investments.mul(rate);
-
-        // Claim tokens for _beneficiary from Coin contract
-        token.claimTokensFor(_beneficiary, _tokens);
-        TokenPurchase(_beneficiary, _investments, _tokens);
-    }
-
-    /**
-    * @dev Transfers contract's balance to wallet
+    * @dev Transfers contract's balance to wallet address
     */
     function withdraw() external
         onlyOwner 
@@ -151,6 +150,7 @@ contract LSSale is Ownable
 
         uint256 _value = this.balance;
         wallet.transfer(_value);
+
         FundsWithdrawal(_value);
     }
 
