@@ -14,7 +14,7 @@ Crowdsale contract will claim some amount of tokens to be moved on particular ac
 
 ## LSSale
 
-A crowdsale smart contract that allows investors to buy Lending Star tokens during limited period of time. Lending Star will split ICO into several phases. For each crawdsale phase there will be a separate instance of LSSale contract published.
+The crowdsale smart contract allows investors to buy Lending Star tokens during limited period of time. Lending Star will split ICO into several phases. For each crawdsale phase there will be a separate instance of LSSale contract published.
 
 The contract will have the following parameters set once during construction:
 - *startTime*, *endTime*: a period of time during which contract is running
