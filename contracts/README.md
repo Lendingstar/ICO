@@ -17,12 +17,12 @@ Crowdsale contract will claim some amount of tokens to be moved on particular ac
 A crowdsale smart contract that allows investors to buy Lending Star tokens during limited period of time. Lending Star will split ICO into several phases. For each crawdsale phase there will be a separate instance of LSSale contract published.
 
 The contract will have the following parameters set once during construction:
-- startTime, endTime: a period of time during which contract is running
-- rate: how many Wei do you need to buy 0.000000000000000001 LST (minimal particle of token)
-- weiGoal: maximum amount of funds the contract expected to raise
-- weiMinimalInvestment: smallest investment that will be allowed by contract. By default it will be set to *rate*. Though for some phases, Lending Start might set this larger than rate 
-- token: reference to LSToken contract (i.e. which tokens will be used for crawdsale)
-- wallet: account address that will be used for funds withdrawal
+- *startTime*, *endTime*: a period of time during which contract is running
+- *rate*: how many Wei do you need to buy 0.000000000000000001 LST (minimal particle of token)
+- *weiGoal*: maximum amount of funds the contract expected to raise
+- *weiMinimalInvestment*: smallest investment that will be allowed by contract. By default it will be set to *rate*. Though for some phases, Lending Start might set this larger than rate 
+- *token*: reference to LSToken contract (i.e. which tokens will be used for crawdsale)
+- *wallet*: account address that will be used for funds withdrawal
 
 Those parameters are set once and nevere changed.
 
