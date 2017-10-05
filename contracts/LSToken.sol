@@ -17,7 +17,7 @@ contract Crowdsale
 * @title Lending Star Token
 * @author LendingStar Malaysia Sdn Bhd.
 * 
-* This is a ERC20 Token with 1 000 000 000 (one million) tokens as initial
+* This is a ERC20 Token with 100 000 000 (one hundred million) tokens as initial
 * supply. Token supports 18 decimal digits hence smallest token particle
 * is 0.000000000000000001
 *
