@@ -49,6 +49,9 @@ contract LSSale is Ownable
     // how much funds in Wei do we want to raise during crowdsale
     uint256 public weiGoal;
 
+    // smallest investment that will be allowed by contract
+    uint256 public weiMinimalInvestment;
+
     // amount of funds (in Wei) been raised
     uint256 public weiRaised = 0;
 
@@ -74,6 +77,7 @@ contract LSSale is Ownable
         require(msg.sender != address(0));
         require(isActive());
         require(msg.value > 0);
+        require(msg.value >= weiMinimalInvestment);
         require(weiRaised.add(msg.value) <= weiGoal);
 
         _;
@@ -84,6 +88,8 @@ contract LSSale is Ownable
     * @param _rate uint256 value specifies how many Wei do you need to buy
     * 0.000000000000000001 LST
     * @param _goal uint256 value specifies what is the goal in Wei of crowdsale
+    * @param _weiMinimalInvestment uint256 value that represents smallest
+    * investment that will be allowed by contract
     * @param _startTime time when crowdsale begins
     * @param _endTime time when crowdsale ends
     * @param _tokenAddress address of LST contract
@@ -92,6 +98,7 @@ contract LSSale is Ownable
     function LSSale(
         uint256 _rate,
         uint256 _goal,
+        uint256 _weiMinimalInvestment,
         uint256 _startTime,
         uint256 _endTime,
         address _tokenAddress,
@@ -108,6 +115,7 @@ contract LSSale is Ownable
 
         rate = _rate;
         weiGoal = _goal;
+        weiMinimalInvestment = _weiMinimalInvestment;
         startTime = _startTime;
         endTime = _endTime;
         token = Token(_tokenAddress);
