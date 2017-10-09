@@ -200,7 +200,6 @@ contract LSToken is StandardToken, Ownable
     * @param _value uint256 The amount of tokens to be claimed
     */
     function claimTokensFor(address _to, uint256 _value) external
-        whenOnSale
     {
         require(msg.sender == saleAddress);
         require(_to != address(0));
