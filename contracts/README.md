@@ -34,7 +34,7 @@ Investor should use buyTokens() method in order to buy some LSTs. The method wil
 
 The crowdsale smart contract which behaves absolutely like LSSale one for transactions less than 100 Ethers. For larger ones  (larger than 100 Ethers), the amount of tokens that investor receives is calculated based on the following bonus rules:
 
-15% token bonus - for transactions [100 - 300) Ethers
-20% token bonus - for transactions [300 - 500) Ethers
-25% token bonus - for transactions [500 - 700) Ethers
-30% token bonus - for transactions larger than 700 Ethers
+- *15% token bonus* for transactions [100 - 300) Ethers
+- *20% token bonus* for transactions [300 - 500) Ethers
+- *25% token bonus* for transactions [500 - 700) Ethers
+- *30% token bonus* for transactions larger than 700 Ethers
