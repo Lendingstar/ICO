@@ -58,10 +58,11 @@ contract LSToken is StandardToken, Ownable
     address internal garbageTokensAccount;
 
     /**
-    * event for logging setCrowdsale activity
+    * events for logging setSale and unsetSale activities
     * @param _crowdsale an addres of crowdsale contract
     */
     event SetCrowdsale(address indexed _crowdsale);
+    event UnsetCrowdsale();
 
     /**
     * event for tokens claim logging
@@ -120,6 +121,19 @@ contract LSToken is StandardToken, Ownable
         sale = Crowdsale(saleAddress);
 
         SetCrowdsale(saleAddress);
+    }
+
+    /**
+    * @dev unsets ongoing crowdsale contract
+    */
+    function unsetSale() external
+        onlyOwner
+    {
+        require(saleAddress != address(0));
+
+        saleAddress = address(0);
+
+        UnsetCrowdsale();
     }
 
     /**
