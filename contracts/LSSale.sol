@@ -140,11 +140,22 @@ contract LSSale is Ownable
         weiRaised = weiRaised.add(_investments);
 
         // Calculating an amount of tokens to be sold
-        uint256 _tokens = _investments.mul(rate);
+        uint256 _tokens = weiToTokens(_investments);
 
         // Claim tokens for _beneficiry from Coin contract
         token.claimTokensFor(_beneficiry, _tokens);
         TokenPurchase(_beneficiry, _investments, _tokens);
+    }
+
+    /**
+    * @dev calculates amount of tokens that can be baught for _investments
+    * @param _investments uint256 represents amount of investments in Wei
+    * @return amount of tokens that can be bought for _investments
+    */
+    function weiToTokens(uint256 _investments) internal constant
+        returns (uint256)
+    {
+        return _investments.mul(rate);
     }
 
     /**
