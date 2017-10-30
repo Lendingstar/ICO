@@ -122,6 +122,13 @@ contract LSSale is Ownable
         wallet = _wallet;
     }
 
+    function () public
+        validPurchase
+        payable
+    {
+        buyTokens(msg.sender, msg.value);
+    }
+
     /**
     * @notice The function forwards appropriate amount of LSTs to investor.
     * Current ETH/LST ratio preserved in 'rate' variable of the contract.
@@ -129,13 +136,8 @@ contract LSSale is Ownable
     * makeing transaction in valid time period AND crowdsale has not reach
     * the cap yet).
     */
-    function buyTokens() public
-        validPurchase
-        payable
+    function buyTokens(address _beneficiry, uint256 _investments) internal
     {
-        address _beneficiry = msg.sender;
-        uint256 _investments = msg.value;
-
         // Updating raised funds status
         weiRaised = weiRaised.add(_investments);
 
