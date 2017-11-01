@@ -38,3 +38,10 @@ The crowdsale smart contract which behaves absolutely like LSSale one for transa
 - *20% token bonus* for transactions [300 - 500) Ethers
 - *25% token bonus* for transactions [500 - 700) Ethers
 - *30% token bonus* for transactions larger than 700 Ethers
+
+## LSMultiSale
+
+The crowdsale contract that acts simmilar to LSale one with the only difference: it claims token from LSToken contract, using standard ERC20 transferFrom method rather than custom claimTokensFor one like LSSale does. This adds the following changes to the crawdsale behavior:
+
+- LSMultiSale can work when LSToken is not on sale only (method isOnSale() returns false)
+- There might be several LSMultiSale contracts working at the same time (compared to LSSale, when the only LSSale contract that explicitely set into LSToken, can sell tokens at one period of time).
