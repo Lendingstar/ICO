@@ -41,7 +41,13 @@ The crowdsale smart contract which behaves absolutely like LSSale one for transa
 
 ## LSMultiSale
 
-The crowdsale contract that acts simmilar to LSale one with the only difference: it claims token from LSToken contract, using standard ERC20 transferFrom method rather than custom claimTokensFor one like LSSale does. This adds the following changes to the crawdsale behavior:
+The crowdsale contract that acts similar to LSale one with the only difference: it claims token from LSToken contract, using standard ERC20 transferFrom method rather than custom claimTokensFor one like LSSale does. This adds the following changes to the crowdsale behavior:
 
 - LSMultiSale can work when LSToken is not on sale only (method isOnSale() returns false)
-- There might be several LSMultiSale contracts working at the same time (compared to LSSale, when the only LSSale contract that explicitely set into LSToken, can sell tokens at one period of time).
+- There might be several LSMultiSale contracts working at the same time (compared to LSSale, when the only LSSale contract that explicitly set into LSToken, can sell tokens at one period of time).
+
+Once LSMultiSale contract has been deployed, approve() function with LSMultiSale contract's address and appropriate amount of tokens should be called on LSToken contract. This function allows LSMultiSale contract to spend particular amount of tokens from LSToken's owner account.
+
+## LSMultiSaleWithBonus
+
+The crowdsale contract simmilar to LSSaleWithBonus but with LSMultiSale functionality.
