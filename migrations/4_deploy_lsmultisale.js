@@ -1,4 +1,4 @@
-const LSSale = artifacts.require("./LSSale.sol");
+const LSMultiSale = artifacts.require("./LSMultiSale.sol");
 
 const tokenPriceEther = 1e-18;
 const minInvestment = new web3.BigNumber(100000000000000000); // 0.1 Eth
@@ -50,5 +50,5 @@ module.exports = function(deployer)
     console.log("Wallet: " + wallet);
     console.log("Token: " + tokenContract.address);
 
-    deployer.deploy(LSSale, rate, goalInWei, minInvestment, startTime, endTime, tokenContract.address, wallet);
+    deployer.deploy(LSMultiSale, rate, goalInWei, minInvestment, startTime, endTime, tokenContract.address, wallet);
 };
